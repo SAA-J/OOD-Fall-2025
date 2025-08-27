@@ -3,7 +3,7 @@ package AssigmentNotSpotify;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Playlist {
+public class  Playlist {
     private String name; // Name of the playlist
 
     // List to store songs in the playlist

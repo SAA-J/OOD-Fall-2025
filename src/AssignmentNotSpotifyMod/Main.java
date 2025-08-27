@@ -1,73 +1,118 @@
 package AssignmentNotSpotifyMod;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        Scanner scnr = new Scanner(System.in);
-        Library library = new Library();
-// Adding songs to the library
-        library.addSong(new Song("Ghosts", "Justin Bieber", 3.12, "Pop", "Joy"));
-        library.addSong(new Song("Flourescent Adolescent", "Arctic Monkeys", 3.03, "Rock", "Sadness"));
-        library.addSong(new Song("No.1 Party Anthem", "Arctic Monkeys", 4.03, "Rock", "Joy"));
-        library.addSong(new Song("A Certain Romance", "Arctic Monkeys", 5.31, "Rock", "Sadness"));
-        library.addSong(new Song("Wake me Up When September Ends", "Green Day", 4.45, "Rock", "Sadness"));
-        library.addSong(new Song("En algun lugar", "Duncan Dhu", 3.56, "Rock", "Joy"));
-        library.addSong(new Song("Me voy", "Julieta Venegas", 3.07, "Pop", "Sadness"));
-        library.addSong(new Song("Darte un beso", "Prince Royce", 3.26, "Pop", "Joy"));
-        library.addSong(new Song("Don't wanna know", "Maroon 5", 3.34, "Pop", "Sadness"));
-        library.addSong(new Song("DAISES", "Justin Bieber", 2.56, "Pop", "Joy"));
-        library.addSong(new Song("Take five", "Dave Brubeck", 5.24, "Jazz", "Joy"));
-        library.addSong(new Song("Stomping at the Savoy", "Benny Goodman", 3.15, "Jazz", "Joy"));
-        library.addSong(new Song("My favorite things", "John Coltrane", 13.44, "Jazz", "Sadness"));
-        library.addSong(new Song("What a little moonlight can do", "Nancy Wilson", 2.27, "Jazz", "Sadness"));
-        library.addSong(new Song("My one and only love", "John Coltrane", 4.55, "Jazz", "Sadness"));
+        Scanner scanner = new Scanner(System.in);
 
+        // Create a library of songs
+        List<Song> library = new ArrayList<>();
+        library.add(new Song("No.1 Party Anthem", "Arctic Monkeys", 4.03, "Rock", "Joy"));
+        library.add(new Song("Crying Lightning", "Arctic Monkeys", 3.44, "Rock", "Sadness"));
+        library.add(new Song("When the Sun Goes Down", "Arctic Monkeys", 240, "Rock", "Sadness"));
+        library.add(new Song("Wake Me up When September Ends", "Green Day", 4.45, "Rock", "Sadness"));
+        library.add(new Song("En algún lugar", "Duncan Dhu", 3.56, "Rock", "Sadness"));
+        library.add(new Song("DAISIES", "Justin Bieber", 2.56, "Pop", "Joy"));
+        library.add(new Song("Girls like You", "Maroon 5", 3.55, "Pop", "Joy"));
+        library.add(new Song("Memories", "Maroon 5", 3.09, "Pop", "Sadness"));
+        library.add(new Song("One Dance", "Drake", 2.53, "Pop", "Joy"));
+        library.add(new Song("Galway Girl", "Ed Sheeran", 2.50, "Pop", "Joy"));
+        library.add(new Song("What's The Rush", "Gerry Mulligan", 3.42, "Jazz", "Sadness"));
+        library.add(new Song("So What", "Miles Davis", 9.23, "Jazz", "Joy"));
+        library.add(new Song("Take Five", "The Dave Brubeck Quartet", 5.24, "Jazz", "Joy"));
+        library.add(new Song("The Things We Did Last Summer", "Freddie Hubbard", 7.19, "Jazz", "Sadness"));
+        library.add(new Song("Chloe", "Joe Pass", 5.21, "Jazz", "Sadness"));
 
+        // Create playlists
+        Playlist popPlaylist = new PopPlaylist("Pop Playlist");
+        Playlist jazzPlaylist = new JazzPlaylist("Jazz Playlist");
+        Playlist rockPlaylist = new RockPlaylist("Rock Playlist");
 
-        //User input
-        System.out.println("Music library: ");
-        System.out.println("Enter 'all', 'genre', or 'mood':");
-        String choice = scnr.nextLine();
-        // switch case for user input, 3 cases (all, genre, mood)
-        switch (choice.toLowerCase()) {
-            case "all" -> {
-                System.out.println("All Songs:");
-                library.displaySongs();
+        // Add songs to playlists
+        for (Song song : library) {
+            switch (song.getGenre().toLowerCase()) {
+                case "pop":
+                    popPlaylist.addSong(song);
+                    break;
+                case "jazz":
+                    jazzPlaylist.addSong(song);
+                    break;
+                case "rock":
+                    rockPlaylist.addSong(song);
+                    break;
             }
-            case "genre" -> {
-                System.out.print("Enter genre: ");
-                String genre = scnr.nextLine();
-                List<Song> genreSongs = library.getSongsGenre(genre);
-                if (genreSongs.isEmpty()) {
-                    System.out.println("No songs found for genre: " + genre);
-                } else {
-                    System.out.println("Songs in genre " + genre + ":");
-                    for (Song song : genreSongs) {
-                        System.out.println(song);;
-                    }
-                }
-            }
-            case "mood" -> {
-                System.out.print("Enter mood (Joy/Sadness): ");
-                String mood = scnr.nextLine();
-                List<Song> moodSongs = library.getSongsMood(mood);
-                if (moodSongs.isEmpty()) {
-                    System.out.println("No songs found for mood: " + mood);
-                } else {
-                    System.out.println("Songs with mood " + mood + ":");
-                    for (Song song : moodSongs) {
-                        System.out.println(song);;
-                    }
-                }
-            }
-            default -> System.out.println("Invalid choice.");
         }
 
-        scnr.close();
+        // Display menu
+        while (true) {
+            System.out.println("\nMenu:");
+            System.out.println("1. View All Songs");
+            System.out.println("2. View Songs by Genre (jazz/pop/rock)");
+            System.out.println("3. View Songs by Mood (joy/sadness)");
+            System.out.println("4. Exit");
+            System.out.print("Choose an option: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            //user choices
+            switch (choice) {
+
+                case 1:
+                    System.out.println("\nAll Songs:");
+                    displayAllSongs(library);
+                    break;
+
+                case 2:
+                    System.out.print("Enter genre: ");
+                    String genre = scanner.nextLine();
+                    displaySongsByGenre(library, genre);
+                    break;
+
+                case 3:
+                    System.out.print("Enter mood (joy/sadness): ");
+                    String mood = scanner.nextLine();
+                    displaySongsByMood(library, mood);
+                    break;
+
+
+                case 4:
+                    System.out.println("Exiting...");
+                    scanner.close();
+                    return;
+
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+    // Display all songs in the library, showing title, artist, genre, and mood
+    private static void displayAllSongs(List<Song> library) {
+        for (Song song : library) {
+            System.out.println("-" + song.getTitle() + " by " + song.getArtist() + " genre, mood:" + song.getGenre() + ", " + song.getMood());
+        }
+    }
+   // Display songs by genre, filter songs based on their genre
+    private static void displaySongsByGenre(List<Song> library, String genre) {
+        System.out.println("\nSongs in genre: " + genre);
+        for (Song song : library) {
+            if (song.getGenre().equalsIgnoreCase(genre)) {
+                System.out.println("- " + song.getTitle() + " by " + song.getArtist());
+            }
+        }
+    }
+    // Display songs by mood, filter songs based on their mood
+    private static void displaySongsByMood(List<Song> library, String mood) {
+        System.out.println("\nSongs with mood: " + mood);
+        for (Song song : library) {
+            if (song.getMood().equalsIgnoreCase(mood)) {
+                System.out.println("- " + song.getTitle() + " by " + song.getArtist());
+            }
+        }
     }
 }
-
-
 
 
 

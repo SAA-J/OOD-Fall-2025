@@ -9,11 +9,11 @@ public class Song {
 
         // Constructor to initialize a Song object with title, artist, and duration
         public Song(String userInputTitle, String artist, double duration, String genre, String mood) {
-            this.title = userInputTitle; // Set the title
-            this.artist = artist; // Set the artist
-            this.duration = duration; // Set the duration
-            this.genre = genre; // Set the genre
-            this.mood = mood; // Set the mood
+            this.title = userInputTitle;
+            this.artist = artist;
+            this.duration = duration;
+            this.genre = genre;
+            this.mood = mood;
         }
 
         // Getter method for title
@@ -30,17 +30,26 @@ public class Song {
         public double getDuration() {
             return duration; // Return the duration of the song
         }
+        // Getter method for genre
         public String getGenre() {
-            return genre; // Return the genre of the song
+            return genre;
         }
+        // Getter method for mood
         public String getMood() {
-            return mood; // Return the mood of the song
+            return mood;
         }
 
-        // Override the toString method to provide a string representation of the song
+        // toString method
         @Override
         public String toString() {
             return "\nName: " + title + "\n Artist: " + artist + "\nDuration: " + duration; // Print the song
         }
-    }
+
+        // Method to simulate playing the song
+        public void play() {
+            System.out.println("Playing: " + title + " by " + artist);
+        }
+
+
+}
 
